@@ -2,12 +2,13 @@ import streamlit as st
 import requests
 import datetime
 
-# Google 스프레드시트 ID 지정
+# Google 스프레드시트 ID 및 공개 API 키 지정
 spreadsheet_id = '1RodiRk48wJ3UbjZeFRdWx9a1bAgBGhpItBt8GanhTDc'
+public_key = 'AIzaSyAvZuCVIZnf8brFXxfbQQr2sX-yYD4ib_Q'
 
 # 제품 목록 가져오기
 def get_products():
-    response = requests.get('https://docs.google.com/spreadsheets/d/{}/export?format=csv'.format(spreadsheet_id))
+    response = requests.get('https://sheets.googleapis.com/v4/spreadsheets/{}/values?key={}&range=A1:A'.format(spreadsheet_id, public_key))
     products = response.content.decode('utf-8').splitlines()
     return products
 
@@ -21,10 +22,8 @@ def search_product(product_name):
 
 # 제품 등록
 def register_product(product_name, price, flavor, purchase_location):
-    requests.post('https://docs.google.com/spreadsheets/d/{}/edit?usp=sharing'.format(spreadsheet_id),
-                  data={'valueInputOption': 'RAW', 
-                        'range': 'A1',
-                        'value': product_name + ',' + price + ',' + flavor + ',' + purchase_location + ',' + str(datetime.datetime.now())})
+    requests.post('https://sheets.googleapis.com/v4/spreadsheets/{}/values?key={}&append=true&valueInputOption=RAW&range=A1'.format(spreadsheet_id, public_key),
+                  data={'values': [[product_name, price, flavor, purchase_location, str(datetime.datetime.now())]]})
 
 # 애플리케이션 UI
 st.title('제품 찾기')
@@ -47,17 +46,4 @@ if st.button('등록'):
         purchase_location = st.text_input('구입처:')
         if st.form_submit_button('등록'):
             register_product(product_name, price, flavor, purchase_location)
-            st.write('등록이 완료되었습니다.')
-            
-            # 수정
-            response = requests.get('https://docs.google.com/spreadsheets/d/{}/export?format=csv'.format(spreadsheet_id))
-            products = response.content.decode('utf-8').splitlines()
-            for i, product in enumerate(products):
-                if product.startswith(product_name):
-                    products[i] = product_name + ',' + price + ',' + flavor + ',' + purchase_location + ',' + str(datetime.datetime.now())
-                    break
-            requests.post('https://docs.google.com/spreadsheets/d/{}/edit?usp=sharing'.format(spreadsheet_id),
-                          data={'valueInputOption': 'RAW', 
-                                'range': 'A1',
-                                'value': '\n'.join(products)})
             st.write('등록이 완료되었습니다.')
