@@ -22,7 +22,7 @@ price = tasting_notes.number_input("가격", 0, 100)
 purchase_location = tasting_notes.text_input("구매처")
 
 # 제출 버튼을 클릭하면 데이터를 Google 스프레드시트에 저장합니다.
-if st.button("제출"):
+if st.form_submit_button("제출"):
     # 현재 날짜와 시간을 가져옵니다.
     now = pd.Timestamp.now()
 
