@@ -21,7 +21,7 @@ def search_product(product_name):
 # 제품 등록
 def register_product(product_name, price, flavor, purchase_location):
     requests.post('https://docs.google.com/spreadsheets/d/{}/edit?usp=sharing'.format(spreadsheet_id),
-                  data={'valueInputOption': 'RAW', 
+                  data={'valueInputOption': 'rawData', 
                         'range': 'A1',
                         'value': product_name + ',' + price + ',' + flavor + ',' + purchase_location})
 
@@ -56,7 +56,7 @@ if st.button('등록'):
                     products[i] = product_name + ',' + price + ',' + flavor + ',' + purchase_location
                     break
             requests.post('https://docs.google.com/spreadsheets/d/{}/edit?usp=sharing'.format(spreadsheet_id),
-                          data={'valueInputOption': 'RAW', 
+                          data={'valueInputOption': 'rawData', 
                                 'range': 'A1',
                                 'value': '\n'.join(products)})
             st.write('등록이 완료되었습니다.')
