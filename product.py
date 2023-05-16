@@ -51,9 +51,9 @@ if st.button('등록'):
             # 수정
             response = requests.get('https://docs.google.com/spreadsheets/d/{}/export?format=csv'.format(spreadsheet_id))
             products = response.content.decode('utf-8').splitlines()
-            for product in products:
+            for i, product in enumerate(products):
                 if product.startswith(product_name):
-                    products[products.index(product)] = product_name + ',' + price + ',' + flavor + ',' + purchase_location
+                    products[i] = product_name + ',' + price + ',' + flavor + ',' + purchase_location
                     break
             requests.post('https://docs.google.com/spreadsheets/d/{}/edit?usp=sharing'.format(spreadsheet_id),
                           data={'valueInputOption': 'RAW', 
