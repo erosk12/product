@@ -47,3 +47,15 @@ if st.button('등록'):
         if st.form_submit_button('등록'):
             register_product(product_name, price, flavor, purchase_location)
             st.write('제품이 등록되었습니다.')
+            
+            # 수정
+            response = requests.get('https://docs.google.com/spreadsheets/d/{}/export?format=csv'.format(spreadsheet_id))
+            products = response.content.decode('utf-8').splitlines()
+            for product in products:
+                if product.startswith(product_name):
+                    products[products.index(product)] = product_name + ',' + price + ',' + flavor + ',' + purchase_location
+                    break
+            requests.post('https://docs.google.com/spreadsheets/d/{}/edit?usp=sharing'.format(spreadsheet_id),
+                          data={'valueInputOption': 'RAW', 
+                                'range': 'A1',
+                                'value': '\n'.join(products)})
