@@ -59,3 +59,4 @@ if st.button('등록'):
                           data={'valueInputOption': 'RAW', 
                                 'range': 'A1',
                                 'value': '\n'.join(products)})
+            st.write('등록이 완료되었습니다.')
