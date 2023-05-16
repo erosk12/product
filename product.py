@@ -74,3 +74,6 @@ if st.button("제출"):
     else:
         # 동일한 제품의 이전 평가가 없습니다.
         st.write("이 제품에 대한 이전 평가가 없습니다.")
+
+# 제출 버튼을 생성합니다.
+submit_button = st.form_submit_button("제출")
