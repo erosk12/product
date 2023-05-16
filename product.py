@@ -21,8 +21,14 @@ if product_name:
         # 제품 정보가 없습니다.
         st.write("이 제품에 대한 정보가 없습니다.")
 
-# 제품 평가
-if product_name:
+# 신규 제품 등록
+if not product_name:
+    # 제품 정보 입력 양식 생성
+    product_info = st.form("제품 정보")
+    product_name = product_info.text_input("제품명")
+    product_brand = product_info.text_input("브랜드")
+    product_type = product_info.text_input("유형")
+
     # 맛 평가 입력 양식 생성
     tasting_notes = st.form("맛 평가")
     sweetness = tasting_notes.slider("단맛", 0, 10, step=0.1)
@@ -42,6 +48,8 @@ if product_name:
         # 데이터를 데이터 프레임으로 저장합니다.
         data = {
             "제품명": product_name,
+            "브랜드": product_brand,
+            "유형": product_type,
             "단맛": sweetness,
             "신맛": sourness,
             "상쾌함": refreshness,
