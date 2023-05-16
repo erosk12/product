@@ -43,5 +43,7 @@ if st.button('등록'):
     price = st.text_input('가격:')
     flavor = st.text_input('맛:')
     purchase_location = st.text_input('구입처:')
-    register_product(product_name, price, flavor, purchase_location)
-    st.write('제품이 등록되었습니다.')
+    with st.form('register_product'):
+        if st.form_submit_button('등록'):
+            register_product(product_name, price, flavor, purchase_location)
+            st.write('제품이 등록되었습니다.')
