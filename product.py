@@ -35,7 +35,7 @@ if st.button('검색'):
     if product:
         st.write('제품 정보:', product)
     else:
-        st.write('제품을 찾을 수 없습니다.')
+        st.write('제품을 찾을 수 없습니다.111111')
 
 # 제품 등록
 if st.button('등록'):
