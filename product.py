@@ -39,11 +39,11 @@ if st.button('검색'):
 
 # 제품 등록
 if st.button('등록'):
-    product_name = st.text_input('제품명:')
-    price = st.text_input('가격:')
-    flavor = st.text_input('맛:')
-    purchase_location = st.text_input('구입처:')
     with st.form('register_product'):
+        product_name = st.text_input('제품명:')
+        price = st.text_input('가격:')
+        flavor = st.text_input('맛:')
+        purchase_location = st.text_input('구입처:')
         if st.form_submit_button('등록'):
             register_product(product_name, price, flavor, purchase_location)
             st.write('제품이 등록되었습니다.')
