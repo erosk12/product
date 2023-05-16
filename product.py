@@ -1,5 +1,6 @@
 import streamlit as st
 import requests
+import datetime
 
 # Google 스프레드시트 ID 지정
 spreadsheet_id = '1RodiRk48wJ3UbjZeFRdWx9a1bAgBGhpItBt8GanhTDc'
@@ -46,7 +47,7 @@ if st.button('등록'):
         purchase_location = st.text_input('구입처:')
         if st.form_submit_button('등록'):
             register_product(product_name, price, flavor, purchase_location)
-            st.write('제품이 등록되었습니다.')
+            st.write('등록이 완료되었습니다.')
             
             # 수정
             response = requests.get('https://docs.google.com/spreadsheets/d/{}/export?format=csv'.format(spreadsheet_id))
