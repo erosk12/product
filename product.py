@@ -23,10 +23,10 @@ def register_product(product_name, price, flavor, purchase_location):
     requests.post('https://docs.google.com/spreadsheets/d/{}/edit?usp=sharing'.format(spreadsheet_id),
                   data={'valueInputOption': 'RAW', 
                         'range': 'A1',
-                        'value': product_name + ',' + price + ',' + flavor + ',' + purchase_location})
+                        'value': product_name + ',' + price + ',' + flavor + ',' + purchase_location + ',' + str(datetime.datetime.now())})
 
 # 애플리케이션 UI
-st.title('전통주 찾기')
+st.title('제품 찾기')
 
 # 제품 검색
 product_name = st.text_input('제품명을 입력하세요:')
@@ -53,7 +53,7 @@ if st.button('등록'):
             products = response.content.decode('utf-8').splitlines()
             for i, product in enumerate(products):
                 if product.startswith(product_name):
-                    products[i] = product_name + ',' + price + ',' + flavor + ',' + purchase_location
+                    products[i] = product_name + ',' + price + ',' + flavor + ',' + purchase_location + ',' + str(datetime.datetime.now())
                     break
             requests.post('https://docs.google.com/spreadsheets/d/{}/edit?usp=sharing'.format(spreadsheet_id),
                           data={'valueInputOption': 'RAW', 
